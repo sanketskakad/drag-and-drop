@@ -187,14 +187,14 @@ type DropZoneProps = {
 ### Shopping Cart Demo
 
 ```tsx
-import { useState } from 'react';
-import { Draggable, DropZone, type DataTransferInterface } from 'react-drag-and-drop-kit';
+import { useState } from "react";
+import { Draggable, DropZone, type DataTransferInterface } from "react-drag-and-drop-kit";
 
 function App() {
   const products = [
-    { id: 1, name: 'Product A', price: '$10' },
-    { id: 2, name: 'Product B', price: '$20' },
-    { id: 3, name: 'Product C', price: '$30' },
+    { id: 1, name: "Product A", price: "$10" },
+    { id: 2, name: "Product B", price: "$20" },
+    { id: 3, name: "Product C", price: "$30" },
   ];
 
   const [cart, setCart] = useState<DataTransferInterface[]>([]);
@@ -204,7 +204,7 @@ function App() {
   };
 
   return (
-    <div style={{ display: 'flex', gap: '20px', padding: '20px' }}>
+    <div style={{ display: "flex", gap: "20px", padding: "20px" }}>
       <div style={{ flex: 1 }}>
         <h2>Products</h2>
         {products.map((product) => (
@@ -212,14 +212,14 @@ function App() {
             key={product.id}
             dataTransfer={{ id: String(product.id), name: product.name }}
             handleDragStart={() => console.log(`Dragging ${product.name}`)}
-            style={{ 
-              padding: '10px', 
-              margin: '10px 0', 
-              backgroundColor: '#3498db',
-              color: '#fff',
-              cursor: 'grab',
-              borderRadius: '4px',
-              userSelect: 'none'
+            style={{
+              padding: "10px",
+              margin: "10px 0",
+              backgroundColor: "#3498db",
+              color: "#fff",
+              cursor: "grab",
+              borderRadius: "4px",
+              userSelect: "none",
             }}
           >
             {product.name} - {product.price}
@@ -227,20 +227,20 @@ function App() {
         ))}
       </div>
 
-      <DropZone 
+      <DropZone
         handleDropItem={handleAddToCart}
-        style={{ 
-          flex: 1, 
-          backgroundColor: '#ecf0f1', 
-          padding: '20px',
-          minHeight: '500px',
-          borderRadius: '4px',
-          border: '2px dashed #bdc3c7'
+        style={{
+          flex: 1,
+          backgroundColor: "#ecf0f1",
+          padding: "20px",
+          minHeight: "500px",
+          borderRadius: "4px",
+          border: "2px dashed #bdc3c7",
         }}
       >
         <h2>Shopping Cart</h2>
         {cart.length === 0 ? (
-          <p style={{ color: '#7f8c8d' }}>Drag items here to add to cart</p>
+          <p style={{ color: "#7f8c8d" }}>Drag items here to add to cart</p>
         ) : (
           <ul>
             {cart.map((item, idx) => (
@@ -264,40 +264,40 @@ You can have multiple drop zones and draggable items on the same page:
 
 ```tsx
 <div>
-  <Draggable 
-    dataTransfer={{ id: '1', label: 'Item 1' }} 
+  <Draggable
+    dataTransfer={{ id: "1", label: "Item 1" }}
     handleDragStart={() => {}}
-    style={{ 
-      padding: '10px', 
-      backgroundColor: '#3498db', 
-      color: 'white', 
-      cursor: 'grab',
-      marginBottom: '10px'
+    style={{
+      padding: "10px",
+      backgroundColor: "#3498db",
+      color: "white",
+      cursor: "grab",
+      marginBottom: "10px",
     }}
   >
     Item 1
   </Draggable>
 
-  <DropZone 
-    handleDropItem={(e, data) => console.log('Zone 1:', data)}
-    style={{ 
-      padding: '20px', 
-      backgroundColor: '#ecf0f1', 
-      minHeight: '200px',
-      marginBottom: '10px',
-      borderRadius: '4px'
+  <DropZone
+    handleDropItem={(e, data) => console.log("Zone 1:", data)}
+    style={{
+      padding: "20px",
+      backgroundColor: "#ecf0f1",
+      minHeight: "200px",
+      marginBottom: "10px",
+      borderRadius: "4px",
     }}
   >
     Drop Zone 1
   </DropZone>
 
-  <DropZone 
-    handleDropItem={(e, data) => console.log('Zone 2:', data)}
-    style={{ 
-      padding: '20px', 
-      backgroundColor: '#e8f8f5', 
-      minHeight: '200px',
-      borderRadius: '4px'
+  <DropZone
+    handleDropItem={(e, data) => console.log("Zone 2:", data)}
+    style={{
+      padding: "20px",
+      backgroundColor: "#e8f8f5",
+      minHeight: "200px",
+      borderRadius: "4px",
     }}
   >
     Drop Zone 2
@@ -330,8 +330,8 @@ const dropZoneStyle: React.CSSProperties = {
   transition: 'backgroundColor 0.3s'
 };
 
-<Draggable 
-  dataTransfer={{ id: '1' }} 
+<Draggable
+  dataTransfer={{ id: '1' }}
   handleDragStart={() => {}}
   style={draggableStyle}
 >
@@ -354,16 +354,16 @@ import {
   type DraggableProps,
   type DropZoneProps,
   type DataTransferInterface,
-} from 'react-drag-and-drop-kit';
+} from "react-drag-and-drop-kit";
 
-const handleDrop: DropZoneProps['handleDropItem'] = (event, dataTransfer) => {
-  console.log('Dropped:', dataTransfer);
+const handleDrop: DropZoneProps["handleDropItem"] = (event, dataTransfer) => {
+  console.log("Dropped:", dataTransfer);
 };
 
 const draggableConfig: DraggableProps = {
-  handleDragStart: (e) => console.log('Start'),
-  dataTransfer: { id: '1' },
-  style: { cursor: 'grab' }
+  handleDragStart: (e) => console.log("Start"),
+  dataTransfer: { id: "1" },
+  style: { cursor: "grab" },
 };
 ```
 
@@ -419,6 +419,7 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 ### Version 0.0.0
 
 Initial release with:
+
 - `Draggable` component
 - `DropZone` component
 - Full TypeScript support
