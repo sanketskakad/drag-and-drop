@@ -1,16 +1,17 @@
 {
-  "name": "drag-and-drop",
+  "name": "react-drag-and-drop-kit",
   "author": {
     "name": "Sanket Kakad"
   },
   "repository": {
-    "url": "https://github.com/sanketskakad/drag-and-drop"
+    "url": "https://github.com/sanketskakad/react-drag-and-drop"
   },
   "private": false,
   "version": "0.0.0",
-  "description": "An open source, lightweight React.js library for implementing simple and flexible drag-and-drop functionality.",
+  "description": "An open source, lightweight React.js library for implementing simple and flexible react-drag-and-drop functionality.",
   "keywords": [
     "react",
+    "react-drag-and-drop-kit",
     "drag-and-drop",
     "dnd",
     "draggable",
@@ -22,8 +23,8 @@
     "typescript"
   ],
   "type": "module",
-  "main": "./dist/drag-and-drop.umd.js",
-  "module": "./dist/drag-and-drop.es.js",
+  "main": "./dist/react-drag-and-drop-kit.umd.js",
+  "module": "./dist/react-drag-and-drop-kit.es.js",
   "types": "./dist/index.d.ts",
   "files": [
     "dist"
@@ -32,11 +33,11 @@
     ".": {
       "import": {
         "types": "./dist/index.d.ts",
-        "default": "./dist/drag-and-drop.es.js"
+        "default": "./dist/react-drag-and-drop-kit.es.js"
       },
       "require": {
         "types": "./dist/index.d.ts",
-        "default": "./dist/drag-and-drop.umd.js"
+        "default": "./dist/react-drag-and-drop-kit.umd.js"
       }
     }
   },

@@ -16,8 +16,8 @@ export default defineConfig({
   build: {
     lib: {
       entry: "src/index.ts",
-      name: "DragAndDrop",
-      fileName: (format) => `drag-and-drop.${format}.js`,
+      name: "DragAndDropKit",
+      fileName: (format) => `react-drag-and-drop-kit.${format}.js`,
     },
     rollupOptions: {
       external: ["react", "react-dom"],
