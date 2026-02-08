@@ -1,0 +1,60 @@
+{
+  "name": "drag-and-drop",
+  "private": false,
+  "version": "0.0.0",
+  "description": "An open source, lightweight React.js library for implementing simple and flexible drag-and-drop functionality.",
+  "keywords": [
+    "react",
+    "drag-and-drop",
+    "dnd",
+    "draggable",
+    "sortable",
+    "ui-components",
+    "drag",
+    "drop",
+    "javascript",
+    "typescript"
+  ],
+  "type": "module",
+  "main": "./dist/drag-and-drop.umd.js",
+  "module": "./dist/drag-and-drop.es.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/drag-and-drop.es.js"
+      },
+      "require": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/drag-and-drop.umd.js"
+      }
+    }
+  },
+  "scripts": {
+    "build": "vite build",
+    "lint": "eslint ."
+  },
+  "peerDependencies": {
+    "react": ">=18",
+    "react-dom": ">=18"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.39.1",
+    "@types/node": "^24.10.1",
+    "@types/react": "^19.2.5",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^5.1.1",
+    "eslint": "^9.39.1",
+    "eslint-plugin-react-hooks": "^7.0.1",
+    "eslint-plugin-react-refresh": "^0.4.24",
+    "globals": "^16.5.0",
+    "typescript": "~5.9.3",
+    "typescript-eslint": "^8.46.4",
+    "vite": "^7.2.4",
+    "vite-plugin-dts": "^4.5.4"
+  }
+}
