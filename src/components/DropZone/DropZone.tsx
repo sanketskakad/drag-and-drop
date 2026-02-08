@@ -1,6 +1,6 @@
 import type { DataTransferInterface, DropZoneProps } from "../../types/DragAndDrop.types";
 
-export function DropZone({ children, handleDropItem }: DropZoneProps) {
+export function DropZone({ children, handleDropItem, style }: DropZoneProps) {
   const handleDropItemEvent = (event: React.DragEvent<HTMLDivElement>) => {
     event.preventDefault();
     const dataTransferStr = event.dataTransfer.getData("dataTransfer");
@@ -8,7 +8,7 @@ export function DropZone({ children, handleDropItem }: DropZoneProps) {
     handleDropItem(event, DataTransfer);
   };
   return (
-    <div onDragOver={(e) => e.preventDefault()} onDrop={handleDropItemEvent}>
+    <div style={style} onDragOver={(e) => e.preventDefault()} onDrop={handleDropItemEvent}>
       {children}
     </div>
   );

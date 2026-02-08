@@ -1,6 +1,6 @@
-# Drag and Drop
+# React Drag and Drop Kit
 
-A lightweight, easy to use React.js library for implementing react-drag-and-drop-kit functionality. This library provides simple components that wrap the native HTML5 Drag and Drop API, making it straightforward to add react-drag-and-drop-kit features to your React applications.
+A lightweight, easy-to-use React.js library for implementing drag-and-drop functionality. This library provides simple components that wrap the native HTML5 Drag and Drop API, making it straightforward to add drag-and-drop features to your React applications.
 
 [![npm version](https://img.shields.io/npm/v/react-drag-and-drop-kit)](https://www.npmjs.com/package/react-drag-and-drop-kit)
 [![npm downloads](https://img.shields.io/npm/dm/react-drag-and-drop-kit)](https://www.npmjs.com/package/react-drag-and-drop-kit)
@@ -9,10 +9,11 @@ A lightweight, easy to use React.js library for implementing react-drag-and-drop
 ## Features
 
 ✨ **Simple and Lightweight** - Minimal API with zero dependencies (besides React)  
-🎯 **Type-Safe** - Full TypeScript support  
+🎯 **Type-Safe** - Full TypeScript support with exported types  
 🎨 **Flexible** - Use with any React component  
-📦 **Reusable** - Export your own custom data during drag operations  
-⚡ **Performance** - Efficient implementation using native browser APIs
+📦 **Reusable** - Pass custom data during drag operations  
+🎨 **Styleable** - Built-in support for custom styling via `style` props  
+⚡ **Performance** - Efficient implementation using native browser APIs  
 
 ## Installation
 
@@ -37,36 +38,47 @@ pnpm add react-drag-and-drop-kit
 Import the `Draggable` and `DropZone` components from the library:
 
 ```tsx
-import { Draggable, DropZone } from "react-drag-and-drop-kit";
-import { useState } from "react";
+import { Draggable, DropZone } from 'react-drag-and-drop-kit';
+import { useState } from 'react';
 
 function App() {
   const [droppedData, setDroppedData] = useState(null);
 
   const handleDragStart = (event) => {
-    console.log("Drag started");
+    console.log('Drag started');
   };
 
   const handleDropItem = (event, dataTransfer) => {
-    console.log("Item dropped:", dataTransfer);
+    console.log('Item dropped:', dataTransfer);
     setDroppedData(dataTransfer);
   };
 
   return (
-    <div style={{ display: "flex", height: "100vh" }}>
-      <div style={{ width: "50%" }}>
-        <Draggable
+    <div style={{ display: 'flex', height: '100vh' }}>
+      <div style={{ width: '50%' }}>
+        <Draggable 
           handleDragStart={handleDragStart}
-          dataTransfer={{ id: "item-1", name: "My Item" }}
+          dataTransfer={{ id: 'item-1', name: 'My Item' }}
+          style={{ 
+            padding: '20px', 
+            backgroundColor: '#3498db', 
+            color: '#fff',
+            cursor: 'grab'
+          }}
         >
-          <div style={{ padding: "20px", backgroundColor: "#3498db", color: "#fff" }}>Drag me!</div>
+          Drag me!
         </Draggable>
       </div>
 
-      <DropZone handleDropItem={handleDropItem}>
-        <div style={{ padding: "20px", backgroundColor: "#2ecc71", minHeight: "100%" }}>
-          {droppedData ? `Dropped: ${JSON.stringify(droppedData)}` : "Drop here!"}
-        </div>
+      <DropZone 
+        handleDropItem={handleDropItem}
+        style={{ 
+          padding: '20px', 
+          backgroundColor: '#2ecc71', 
+          minHeight: '100%' 
+        }}
+      >
+        {droppedData ? `Dropped: ${JSON.stringify(droppedData)}` : 'Drop here!'}
       </DropZone>
     </div>
   );
@@ -83,18 +95,25 @@ Wraps any React component to make it draggable.
 
 #### Props
 
-| Prop              | Type                                               | Description                                                    |
-| ----------------- | -------------------------------------------------- | -------------------------------------------------------------- |
-| `children`        | `ReactNode`                                        | The content to be dragged                                      |
-| `handleDragStart` | `(event: React.DragEvent<HTMLDivElement>) => void` | Callback fired when drag starts                                |
-| `dataTransfer`    | `DataTransferInterface`                            | Custom data object to be transferred during the drag operation |
+| Prop | Type | Required | Description |
+|------|------|----------|-------------|
+| `children` | `ReactNode` | No | The content to be dragged |
+| `handleDragStart` | `(event: React.DragEvent<HTMLDivElement>) => void` | Yes | Callback fired when drag starts |
+| `dataTransfer` | `DataTransferInterface` | No | Custom data object to be transferred during drag |
+| `style` | `React.CSSProperties` | No | Inline CSS styles for the draggable element |
 
 #### Example
 
 ```tsx
-<Draggable
-  handleDragStart={(event) => console.log("Dragging...")}
-  dataTransfer={{ itemId: 123, type: "product" }}
+<Draggable 
+  handleDragStart={(event) => console.log('Dragging...')}
+  dataTransfer={{ itemId: '123', type: 'product' }}
+  style={{ 
+    padding: '10px', 
+    backgroundColor: '#3498db',
+    cursor: 'grab',
+    borderRadius: '4px'
+  }}
 >
   <div>Draggable Item</div>
 </Draggable>
@@ -106,17 +125,24 @@ Creates a drop target that accepts dragged items.
 
 #### Props
 
-| Prop             | Type                                                                                | Description                            |
-| ---------------- | ----------------------------------------------------------------------------------- | -------------------------------------- |
-| `children`       | `ReactNode`                                                                         | The content of the drop zone           |
-| `handleDropItem` | `(e: React.DragEvent<HTMLDivElement>, dataTransfer: DataTransferInterface) => void` | Callback fired when an item is dropped |
+| Prop | Type | Required | Description |
+|------|------|----------|-------------|
+| `children` | `ReactNode` | No | The content of the drop zone |
+| `handleDropItem` | `(e: React.DragEvent<HTMLDivElement>, dataTransfer: DataTransferInterface) => void` | Yes | Callback fired when an item is dropped |
+| `style` | `React.CSSProperties` | No | Inline CSS styles for the drop zone element |
 
 #### Example
 
 ```tsx
-<DropZone
+<DropZone 
   handleDropItem={(event, dataTransfer) => {
-    console.log("Dropped data:", dataTransfer);
+    console.log('Dropped data:', dataTransfer);
+  }}
+  style={{
+    border: '2px dashed #667eea',
+    padding: '20px',
+    minHeight: '300px',
+    backgroundColor: '#f0f4ff'
   }}
 >
   <div>Drop Target</div>
@@ -133,6 +159,27 @@ A simple object interface for passing custom data during drag operations:
 interface DataTransferInterface {
   [key: string]: string;
 }
+```
+
+#### `DraggableProps`
+
+```typescript
+type DraggableProps = {
+  children?: ReactNode;
+  style?: React.CSSProperties;
+  handleDragStart: (event: React.DragEvent<HTMLDivElement>) => void;
+  dataTransfer?: DataTransferInterface;
+};
+```
+
+#### `DropZoneProps`
+
+```typescript
+type DropZoneProps = {
+  children?: ReactNode;
+  style?: React.CSSProperties;
+  handleDropItem: (e: React.DragEvent<HTMLDivElement>, dataTransfer: DataTransferInterface) => void;
+};
 ```
 
 ## Real-World Example
@@ -234,7 +281,7 @@ You can have multiple drop zones and draggable items on the same page:
 
 ### Styled Drag and Drop
 
-Enhance your react-drag-and-drop-kit with custom CSS:
+Enhance your drag-and-drop with custom CSS:
 
 ```tsx
 <style>{`

@@ -5,12 +5,14 @@ export interface DataTransferInterface {
 }
 
 export type DraggableProps = {
-  children: ReactNode;
+  children?: ReactNode;
+  style?: React.CSSProperties;
   handleDragStart: (event: React.DragEvent<HTMLDivElement>) => void;
-  dataTransfer: DataTransferInterface;
+  dataTransfer?: DataTransferInterface;
 };
 
 export type DropZoneProps = {
-  children: ReactNode;
+  children?: ReactNode;
+  style?: React.CSSProperties;
   handleDropItem: (e: React.DragEvent<HTMLDivElement>, dataTransfer: DataTransferInterface) => void;
 };
