@@ -1,5 +1,11 @@
 {
   "name": "drag-and-drop",
+  "author": {
+    "name": "Sanket Kakad"
+  },
+  "repository": {
+    "url": "https://github.com/sanketskakad/drag-and-drop"
+  },
   "private": false,
   "version": "0.0.0",
   "description": "An open source, lightweight React.js library for implementing simple and flexible drag-and-drop functionality.",
