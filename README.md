@@ -6,7 +6,7 @@ A lightweight, easy-to-use React.js library for implementing drag-and-drop funct
 [![npm downloads](https://img.shields.io/npm/dm/react-drag-and-drop-kit)](https://www.npmjs.com/package/react-drag-and-drop-kit)
 [![license](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
 
-![Demo](demo/dnd-in-action.gif)
+![Demo Video](https://github.com/sanketskakad/drag-and-drop/blob/main/demo/dnd-in-action.gif?raw=true)
 
 ## Features
 
