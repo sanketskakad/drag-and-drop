@@ -1,13 +1,19 @@
 import type { DraggableProps } from "../../types/DragAndDrop.types";
 
-export function Draggable({ children, handleDragStart, dataTransfer, style }: DraggableProps) {
+export function Draggable({
+  children,
+  handleDragStart,
+  dataTransfer,
+  style,
+  className,
+}: DraggableProps) {
   const handleDragStartEvent = (event: React.DragEvent<HTMLDivElement>) => {
     event.dataTransfer.setData("dataTransfer", JSON.stringify(dataTransfer));
-    handleDragStart(event);
+    if (handleDragStart) handleDragStart(event);
   };
 
   return (
-    <div style={style} draggable="true" onDragStart={handleDragStartEvent}>
+    <div style={style} className={className} draggable="true" onDragStart={handleDragStartEvent}>
       {children}
     </div>
   );

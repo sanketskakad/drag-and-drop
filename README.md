@@ -179,274 +179,172 @@ type DraggableProps = {
 ```typescript
 type DropZoneProps = {
   children?: ReactNode;
-  style?: React.CSSProperties;
-  handleDropItem: (e: React.DragEvent<HTMLDivElement>, dataTransfer: DataTransferInterface) => void;
-};
-```
+   # React Drag and Drop Kit
 
-## Real-World Example
+  a lightweight, easy-to-use React library that wraps the native HTML5 Drag and Drop API with two small components: `Draggable` and `DropZone`.
 
-### Shopping Cart Demo
+  [![npm version](https://img.shields.io/npm/v/react-drag-and-drop-kit)](https://www.npmjs.com/package/react-drag-and-drop-kit)
+  [![npm downloads](https://img.shields.io/npm/dm/react-drag-and-drop-kit)](https://www.npmjs.com/package/react-drag-and-drop-kit)
+  [![license](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
 
-```tsx
-import { useState } from "react";
-import { Draggable, DropZone, type DataTransferInterface } from "react-drag-and-drop-kit";
+  ## What changed (quick)
 
-function App() {
-  const products = [
-    { id: 1, name: "Product A", price: "$10" },
-    { id: 2, name: "Product B", price: "$20" },
-    { id: 3, name: "Product C", price: "$30" },
-  ];
+  - Package name: `react-drag-and-drop-kit`
+  - The components accept an optional `style` prop for inline styling
+  - `children` and `dataTransfer` are optional in props (TypeScript)
 
-  const [cart, setCart] = useState<DataTransferInterface[]>([]);
+  ## Features
 
-  const handleAddToCart = (event, dataTransfer) => {
-    setCart([...cart, dataTransfer]);
+  - Small and focused API
+  - TypeScript-first with exported types
+  - Works with any React component
+  - Simple JSON-serializable data transfer
+  - Optional inline `style` support for both components
+
+  ## Installation
+
+  ```bash
+  npm install react-drag-and-drop-kit
+  ```
+
+  Or with yarn / pnpm:
+
+  ```bash
+  yarn add react-drag-and-drop-kit
+  pnpm add react-drag-and-drop-kit
+  ```
+
+  ## Quick start
+
+  ```tsx
+  import { Draggable, DropZone } from 'react-drag-and-drop-kit';
+  import { useState } from 'react';
+
+  function App() {
+    const [dropped, setDropped] = useState(null);
+
+    const handleDragStart = (e: React.DragEvent<HTMLDivElement>) => {
+      // optional hook
+    };
+
+    const handleDrop = (e: React.DragEvent<HTMLDivElement>, data) => {
+      setDropped(data);
+    };
+
+    return (
+      <div style={{ display: 'flex', gap: 16 }}>
+        <Draggable
+          handleDragStart={handleDragStart}
+          dataTransfer={{ id: 'item-1', label: 'Item 1' }}
+          style={{ padding: 12, background: '#3498db', color: 'white', cursor: 'grab' }}
+        >
+          Drag me
+        </Draggable>
+
+        <DropZone handleDropItem={handleDrop} style={{ padding: 16, minHeight: 120, border: '2px dashed #bbb' }}>
+          {dropped ? `Dropped: ${JSON.stringify(dropped)}` : 'Drop here'}
+        </DropZone>
+      </div>
+    );
+  }
+
+  export default App;
+  ```
+
+  ## API
+
+  ### `Draggable`
+
+  Props:
+
+  - `children?: React.ReactNode` — optional content (you can also pass plain text)
+  - `style?: React.CSSProperties` — optional inline styles applied to the wrapper div
+  - `handleDragStart: (e: React.DragEvent<HTMLDivElement>) => void` — required callback executed on drag start
+  - `dataTransfer?: DataTransferInterface` — optional object that will be JSON-serialized into the native DataTransfer under the `dataTransfer` key
+
+  Example:
+
+  ```tsx
+  <Draggable
+    handleDragStart={(e) => console.log('start')}
+    dataTransfer={{ id: '1', type: 'product' }}
+    style={{ padding: 8, background: '#4caf50', color: 'white' }}
+  >
+    Product 1
+  </Draggable>
+  ```
+
+  ### `DropZone`
+
+  Props:
+
+  - `children?: React.ReactNode` — optional content
+  - `style?: React.CSSProperties` — optional inline styles applied to the wrapper div
+  - `handleDropItem: (e: React.DragEvent<HTMLDivElement>, data: DataTransferInterface) => void` — required callback that receives the parsed `dataTransfer` object
+
+  Example:
+
+  ```tsx
+  <DropZone handleDropItem={(e, data) => console.log(data)} style={{ padding: 12 }}>
+    Drop items here
+  </DropZone>
+  ```
+
+  ## Types
+
+  ```ts
+  export interface DataTransferInterface {
+    [key: string]: string;
+  }
+
+  export type DraggableProps = {
+    children?: React.ReactNode;
+    style?: React.CSSProperties;
+    handleDragStart: (event: React.DragEvent<HTMLDivElement>) => void;
+    dataTransfer?: DataTransferInterface;
   };
 
-  return (
-    <div style={{ display: "flex", gap: "20px", padding: "20px" }}>
-      <div style={{ flex: 1 }}>
-        <h2>Products</h2>
-        {products.map((product) => (
-          <Draggable
-            key={product.id}
-            dataTransfer={{ id: String(product.id), name: product.name }}
-            handleDragStart={() => console.log(`Dragging ${product.name}`)}
-            style={{
-              padding: "10px",
-              margin: "10px 0",
-              backgroundColor: "#3498db",
-              color: "#fff",
-              cursor: "grab",
-              borderRadius: "4px",
-              userSelect: "none",
-            }}
-          >
-            {product.name} - {product.price}
-          </Draggable>
-        ))}
-      </div>
+  export type DropZoneProps = {
+    children?: React.ReactNode;
+    style?: React.CSSProperties;
+    handleDropItem: (e: React.DragEvent<HTMLDivElement>, dataTransfer: DataTransferInterface) => void;
+  };
+  ```
 
-      <DropZone
-        handleDropItem={handleAddToCart}
-        style={{
-          flex: 1,
-          backgroundColor: "#ecf0f1",
-          padding: "20px",
-          minHeight: "500px",
-          borderRadius: "4px",
-          border: "2px dashed #bdc3c7",
-        }}
-      >
-        <h2>Shopping Cart</h2>
-        {cart.length === 0 ? (
-          <p style={{ color: "#7f8c8d" }}>Drag items here to add to cart</p>
-        ) : (
-          <ul>
-            {cart.map((item, idx) => (
-              <li key={idx}>{item.name}</li>
-            ))}
-          </ul>
-        )}
-      </DropZone>
-    </div>
-  );
-}
+  ## Examples
 
-export default App;
-```
+  - See `test-drag-and-drop` demo app in the repository for usage with Vite + React
 
-## Advanced Usage
+  ## Browser support
 
-### Multiple Drop Zones
+  Uses HTML5 Drag and Drop — supported in modern browsers (Chrome, Firefox, Safari, Edge). Note: behaviour can vary for mobile browsers.
 
-You can have multiple drop zones and draggable items on the same page:
+  ## Changelog
 
-```tsx
-<div>
-  <Draggable
-    dataTransfer={{ id: "1", label: "Item 1" }}
-    handleDragStart={() => {}}
-    style={{
-      padding: "10px",
-      backgroundColor: "#3498db",
-      color: "white",
-      cursor: "grab",
-      marginBottom: "10px",
-    }}
-  >
-    Item 1
-  </Draggable>
+  ### Version 1.0.0
 
-  <DropZone
-    handleDropItem={(e, data) => console.log("Zone 1:", data)}
-    style={{
-      padding: "20px",
-      backgroundColor: "#ecf0f1",
-      minHeight: "200px",
-      marginBottom: "10px",
-      borderRadius: "4px",
-    }}
-  >
-    Drop Zone 1
-  </DropZone>
+  - Initial stable release
+  - Added optional `style` prop to `Draggable` and `DropZone`
+  - Made `children` and `dataTransfer` optional in props
+  - TypeScript types exported
 
-  <DropZone
-    handleDropItem={(e, data) => console.log("Zone 2:", data)}
-    style={{
-      padding: "20px",
-      backgroundColor: "#e8f8f5",
-      minHeight: "200px",
-      borderRadius: "4px",
-    }}
-  >
-    Drop Zone 2
-  </DropZone>
-</div>
-```
+  ### Version 0.0.0
 
-### Drag with Custom Styling
+  - Minimal working `Draggable` and `DropZone` components
 
-Use the `style` prop to create visually appealing drag-and-drop experiences:
+  ## Contributing
 
-```tsx
-const draggableStyle: React.CSSProperties = {
-  padding: '15px',
-  background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-  color: 'white',
-  cursor: 'grab',
-  borderRadius: '8px',
-  boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
-  transition: 'transform 0.2s, boxShadow 0.2s',
-  userSelect: 'none'
-};
+  Please open issues or PRs in the GitHub repository. Follow typical GitHub workflow: fork, branch, PR.
 
-const dropZoneStyle: React.CSSProperties = {
-  padding: '20px',
-  border: '2px dashed #667eea',
-  borderRadius: '8px',
-  minHeight: '300px',
-  backgroundColor: 'rgba(102, 126, 234, 0.1)',
-  transition: 'backgroundColor 0.3s'
-};
+  ## License
 
-<Draggable
-  dataTransfer={{ id: '1' }}
-  handleDragStart={() => {}}
-  style={draggableStyle}
->
-  Drag me with style!
-</Draggable>
+  MIT
 
-<DropZone handleDropItem={() => {}} style={dropZoneStyle}>
-  Styled Drop Zone
-</DropZone>
-```
+  ## Author
 
-## TypeScript Support
+  Sanket Kakad — https://github.com/sanketskakad
 
+  ---
+
+  If you'd like, I can also run a quick local build or update package metadata — tell me which you'd prefer next.
 The library is built with TypeScript and exports all necessary types:
-
-```tsx
-import {
-  Draggable,
-  DropZone,
-  type DraggableProps,
-  type DropZoneProps,
-  type DataTransferInterface,
-} from "react-drag-and-drop-kit";
-
-const handleDrop: DropZoneProps["handleDropItem"] = (event, dataTransfer) => {
-  console.log("Dropped:", dataTransfer);
-};
-
-const draggableConfig: DraggableProps = {
-  handleDragStart: (e) => console.log("Start"),
-  dataTransfer: { id: "1" },
-  style: { cursor: "grab" },
-};
-```
-
-## Browser Support
-
-This library uses the HTML5 Drag and Drop API, which is supported in all modern browsers:
-
-- Chrome/Edge 4+
-- Firefox 3.6+
-- Safari 3.1+
-- Opera 12+
-- IE 10+
-
-## Performance Considerations
-
-- The library uses React's native event system for optimal performance
-- Drag operations are handled efficiently with minimal re-renders
-- Data transfer is serialized to JSON, so ensure your data is serializable
-- Inline `style` props are recommended for better performance with frequent updates
-
-## Contributing
-
-Contributions are welcome! Please feel free to submit a Pull Request.
-
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
-
-## License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
-
-## Author
-
-**Sanket Kakad**
-
-- GitHub: [@sanketskakad](https://github.com/sanketskakad)
-- Repository: [react-drag-and-drop-kit](https://github.com/sanketskakad/react-drag-and-drop)
-
-## Changelog
-
-### Version 1.0.0
-
-- ✨ Added `style` prop to both `Draggable` and `DropZone` components
-- ✨ Made `children` and `dataTransfer` optional in component props
-- 🎨 Improved styling flexibility with built-in React CSS properties support
-- 📦 Package renamed to `react-drag-and-drop-kit` for clarity
-- 📝 Enhanced documentation with type definitions
-- 🚀 First major stable release
-
-### Version 0.0.0
-
-Initial release with:
-
-- `Draggable` component
-- `DropZone` component
-- Full TypeScript support
-- React 18+ compatibility
-
-## FAQ
-
-**Q: Can I drag multiple items at once?**  
-A: The current version handles single-element dragging. However, you can transfer multiple item references through the `dataTransfer` object by encoding them as comma-separated strings or JSON.
-
-**Q: Can I customize the drag ghost image?**  
-A: Yes, you can use the `setDragImage` method in the `handleDragStart` callback on the drag event.
-
-**Q: How do I apply custom styles to draggable and drop zone elements?**  
-A: Use the `style` prop on both `Draggable` and `DropZone` components. It accepts standard React CSS properties (`React.CSSProperties`).
-
-**Q: Is there any CSS required?**  
-A: No, the library requires no CSS. The `style` prop allows you to add all necessary visual feedback for better UX.
-
-**Q: What data types can I transfer?**  
-A: The `dataTransfer` object should contain string values. Convert complex types to JSON strings if needed.
-
-**Q: Can I use the style prop with CSS-in-JS libraries?**  
-A: Yes, the `style` prop accepts any valid `React.CSSProperties` object, making it compatible with styled-components, emotion, and other CSS-in-JS solutions.
-
-## Support
-
-If you have any questions or issues, please open an issue on the [GitHub repository](https://github.com/sanketskakad/react-drag-and-drop/issues).
