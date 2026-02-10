@@ -176,7 +176,7 @@ type DraggableProps = {
 
 #### `DropZoneProps`
 
-```typescript
+````typescript
 type DropZoneProps = {
   children?: ReactNode;
    # React Drag and Drop Kit
@@ -205,146 +205,144 @@ type DropZoneProps = {
 
   ```bash
   npm install react-drag-and-drop-kit
-  ```
+````
 
-  Or with yarn / pnpm:
+Or with yarn / pnpm:
 
-  ```bash
-  yarn add react-drag-and-drop-kit
-  pnpm add react-drag-and-drop-kit
-  ```
+```bash
+yarn add react-drag-and-drop-kit
+pnpm add react-drag-and-drop-kit
+```
 
-  ## Quick start
+## Quick start
 
-  ```tsx
-  import { Draggable, DropZone } from 'react-drag-and-drop-kit';
-  import { useState } from 'react';
+```tsx
+import { Draggable, DropZone } from "react-drag-and-drop-kit";
+import { useState } from "react";
 
-  function App() {
-    const [dropped, setDropped] = useState(null);
+function App() {
+  const [dropped, setDropped] = useState(null);
 
-    const handleDragStart = (e: React.DragEvent<HTMLDivElement>) => {
-      // optional hook
-    };
-
-    const handleDrop = (e: React.DragEvent<HTMLDivElement>, data) => {
-      setDropped(data);
-    };
-
-    return (
-      <div style={{ display: 'flex', gap: 16 }}>
-        <Draggable
-          handleDragStart={handleDragStart}
-          dataTransfer={{ id: 'item-1', label: 'Item 1' }}
-          style={{ padding: 12, background: '#3498db', color: 'white', cursor: 'grab' }}
-        >
-          Drag me
-        </Draggable>
-
-        <DropZone handleDropItem={handleDrop} style={{ padding: 16, minHeight: 120, border: '2px dashed #bbb' }}>
-          {dropped ? `Dropped: ${JSON.stringify(dropped)}` : 'Drop here'}
-        </DropZone>
-      </div>
-    );
-  }
-
-  export default App;
-  ```
-
-  ## API
-
-  ### `Draggable`
-
-  Props:
-
-  - `children?: React.ReactNode` — optional content (you can also pass plain text)
-  - `style?: React.CSSProperties` — optional inline styles applied to the wrapper div
-  - `handleDragStart: (e: React.DragEvent<HTMLDivElement>) => void` — required callback executed on drag start
-  - `dataTransfer?: DataTransferInterface` — optional object that will be JSON-serialized into the native DataTransfer under the `dataTransfer` key
-
-  Example:
-
-  ```tsx
-  <Draggable
-    handleDragStart={(e) => console.log('start')}
-    dataTransfer={{ id: '1', type: 'product' }}
-    style={{ padding: 8, background: '#4caf50', color: 'white' }}
-  >
-    Product 1
-  </Draggable>
-  ```
-
-  ### `DropZone`
-
-  Props:
-
-  - `children?: React.ReactNode` — optional content
-  - `style?: React.CSSProperties` — optional inline styles applied to the wrapper div
-  - `handleDropItem: (e: React.DragEvent<HTMLDivElement>, data: DataTransferInterface) => void` — required callback that receives the parsed `dataTransfer` object
-
-  Example:
-
-  ```tsx
-  <DropZone handleDropItem={(e, data) => console.log(data)} style={{ padding: 12 }}>
-    Drop items here
-  </DropZone>
-  ```
-
-  ## Types
-
-  ```ts
-  export interface DataTransferInterface {
-    [key: string]: string;
-  }
-
-  export type DraggableProps = {
-    children?: React.ReactNode;
-    style?: React.CSSProperties;
-    handleDragStart: (event: React.DragEvent<HTMLDivElement>) => void;
-    dataTransfer?: DataTransferInterface;
+  const handleDragStart = (e: React.DragEvent<HTMLDivElement>) => {
+    // optional hook
   };
 
-  export type DropZoneProps = {
-    children?: React.ReactNode;
-    style?: React.CSSProperties;
-    handleDropItem: (e: React.DragEvent<HTMLDivElement>, dataTransfer: DataTransferInterface) => void;
+  const handleDrop = (e: React.DragEvent<HTMLDivElement>, data) => {
+    setDropped(data);
   };
-  ```
 
-  ## Examples
+  return (
+    <div style={{ display: "flex", gap: 16 }}>
+      <Draggable
+        handleDragStart={handleDragStart}
+        dataTransfer={{ id: "item-1", label: "Item 1" }}
+        style={{ padding: 12, background: "#3498db", color: "white", cursor: "grab" }}
+      >
+        Drag me
+      </Draggable>
 
-  - See `test-drag-and-drop` demo app in the repository for usage with Vite + React
+      <DropZone
+        handleDropItem={handleDrop}
+        style={{ padding: 16, minHeight: 120, border: "2px dashed #bbb" }}
+      >
+        {dropped ? `Dropped: ${JSON.stringify(dropped)}` : "Drop here"}
+      </DropZone>
+    </div>
+  );
+}
 
-  ## Browser support
+export default App;
+```
 
-  Uses HTML5 Drag and Drop — supported in modern browsers (Chrome, Firefox, Safari, Edge). Note: behaviour can vary for mobile browsers.
+## API
 
-  ## Changelog
+### `Draggable`
 
-  ### Version 1.0.0
+Props:
 
-  - Initial stable release
-  - Added optional `style` prop to `Draggable` and `DropZone`
-  - Made `children` and `dataTransfer` optional in props
-  - TypeScript types exported
+- `children?: React.ReactNode` — optional content (you can also pass plain text)
+- `style?: React.CSSProperties` — optional inline styles applied to the wrapper div
+- `handleDragStart: (e: React.DragEvent<HTMLDivElement>) => void` — required callback executed on drag start
+- `dataTransfer?: DataTransferInterface` — optional object that will be JSON-serialized into the native DataTransfer under the `dataTransfer` key
 
-  ### Version 0.0.0
+Example:
 
-  - Minimal working `Draggable` and `DropZone` components
+```tsx
+<Draggable
+  handleDragStart={(e) => console.log("start")}
+  dataTransfer={{ id: "1", type: "product" }}
+  style={{ padding: 8, background: "#4caf50", color: "white" }}
+>
+  Product 1
+</Draggable>
+```
 
-  ## Contributing
+### `DropZone`
 
-  Please open issues or PRs in the GitHub repository. Follow typical GitHub workflow: fork, branch, PR.
+Props:
 
-  ## License
+- `children?: React.ReactNode` — optional content
+- `style?: React.CSSProperties` — optional inline styles applied to the wrapper div
+- `handleDropItem: (e: React.DragEvent<HTMLDivElement>, data: DataTransferInterface) => void` — required callback that receives the parsed `dataTransfer` object
 
-  MIT
+Example:
 
-  ## Author
+```tsx
+<DropZone handleDropItem={(e, data) => console.log(data)} style={{ padding: 12 }}>
+  Drop items here
+</DropZone>
+```
 
-  Sanket Kakad — https://github.com/sanketskakad
+## Types
 
-  ---
+```ts
+export interface DataTransferInterface {
+  [key: string]: string;
+}
 
-  If you'd like, I can also run a quick local build or update package metadata — tell me which you'd prefer next.
-The library is built with TypeScript and exports all necessary types:
+export type DraggableProps = {
+  children?: React.ReactNode;
+  style?: React.CSSProperties;
+  handleDragStart: (event: React.DragEvent<HTMLDivElement>) => void;
+  dataTransfer?: DataTransferInterface;
+};
+
+export type DropZoneProps = {
+  children?: React.ReactNode;
+  style?: React.CSSProperties;
+  handleDropItem: (e: React.DragEvent<HTMLDivElement>, dataTransfer: DataTransferInterface) => void;
+};
+```
+
+## Examples
+
+- See `test-drag-and-drop` demo app in the repository for usage with Vite + React
+
+## Browser support
+
+Uses HTML5 Drag and Drop — supported in modern browsers (Chrome, Firefox, Safari, Edge). Note: behaviour can vary for mobile browsers.
+
+## Changelog
+
+### Version 1.0.0
+
+- Initial stable release
+- Added optional `style` prop to `Draggable` and `DropZone`
+- Made `children` and `dataTransfer` optional in props
+- TypeScript types exported
+
+### Version 0.0.0
+
+- Minimal working `Draggable` and `DropZone` components
+
+## Contributing
+
+Please open issues or PRs in the GitHub repository. Follow typical GitHub workflow: fork, branch, PR.
+
+## License
+
+MIT
+
+## Author
+
+Sanket Kakad — https://github.com/sanketskakad
